@@ -1,7 +1,7 @@
 # Installation de la suite LAMP 
-- hosts: 192.168.0.250
+- hosts: 192.168.56.104
   tasks:
-    - name: install lamp stack
+    - name: "installation de la suite lamp"
       become: yes
       become_user: root
       yum:
@@ -13,7 +13,7 @@
         state: present
         update_cache: yes
 
-    - name: start apache service
+    - name: "demarrage du service apache"
       become: yes
       become_user: root
       service:
@@ -21,7 +21,7 @@
         state: started
         enabled: yes
 
-    - name: start mysql service
+    - name: "demarrage du service mysql"
       become: yes
       become_user: root
       service:
@@ -29,13 +29,13 @@
         state: started
         enabled: yes
 
-    - name: create target directory
+    - name: "bypass creation du dossier html et 755 dessus"
       file: path=/var/www/html state=directory mode=0755
 
-    - name: deploy index.html
+    - name: "copie des fichiers de app-salaire dans le dossier du site principal" 
       become: yes
       become_user: root
       copy:
-        src: index.html
-        dest: /var/www/html/index.html
+        src: /app-salaire/
+        dest: /var/www/html
 
